@@ -9,8 +9,6 @@ import { inDevOrProd, inDevTest } from './lib/checkNodeEnv';
 export const createTransporter = async () => {
     let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
 
-    console.log(inDevTest())
-
     if (!inDevOrProd() && !inDevTest()) {
         // Generate test SMTP service account from ethereal.email
         const testAccount = await nodemailer.createTestAccount();

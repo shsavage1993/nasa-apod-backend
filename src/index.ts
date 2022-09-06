@@ -10,7 +10,6 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 // only load .env file if server is not in development/production mode
 if (!inDevOrProd()) {
     require('dotenv').config();
-    console.log(process.env.NODE_ENV)
 }
 
 const app: Express = express();
@@ -21,12 +20,12 @@ app.use(morganMiddleware);
 
 // Set up CORS
 var corsOptions = {
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.CORS_ORIGIN?.split(' '),
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
 
-app.get('/api', cors(corsOptions), (req: Request, res: Response) => {
+app.get('/', cors(corsOptions), (req: Request, res: Response) => {
     res.send('NASA APOD API Server');
 });
 

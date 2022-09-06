@@ -22,12 +22,13 @@ jobs:
       - name: Build application
         run: npm ci && npm run build
         env:
-          MAILER_HOST: 'smtp.zoho.eu'
-          MAILER_PORT: '465'
-          MAILER_USER: ${{ secrets.MAILER_USER_DEV }}
-          MAILER_PASS: ${{ secrets.MAILER_PASS_DEV }}
-          MAIL_FROM: ${{ secrets.MAIL_FROM_DEV }}
-          MAIL_TO: ${{ secrets.MAIL_TO_DEV }}
+          MAILER_HOST: '${{ secrets.DEV_MAILER_HOST }}'
+          MAILER_PORT: '${{ secrets.DEV_MAILER_PORT }}'
+          MAILER_USER: ${{ secrets.DEV_MAILER_USER }}
+          MAILER_PASS: ${{ secrets.DEV_MAILER_PASS }}
+          MAIL_FROM: ${{ secrets.DEV_MAIL_FROM }}
+          MAIL_TO: ${{ secrets.DEV_MAIL_TO }}
+          CORS_ORIGIN: 'nasa-apod-app-dev.web.app nasa-apod-app-dev.firebaseapp.com' # space-separated domains
           NODE_ENV: 'development'
 
       - name: Deploy to Heroku
