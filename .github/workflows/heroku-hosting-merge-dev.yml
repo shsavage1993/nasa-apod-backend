@@ -22,8 +22,8 @@ jobs:
       - name: Build application
         run: npm ci && npm run build
         env:
-          MAILER_HOST: '${{ secrets.DEV_MAILER_HOST }}'
-          MAILER_PORT: '${{ secrets.DEV_MAILER_PORT }}'
+          MAILER_HOST: ${{ secrets.DEV_MAILER_HOST }}
+          MAILER_PORT: ${{ secrets.DEV_MAILER_PORT }}
           MAILER_USER: ${{ secrets.DEV_MAILER_USER }}
           MAILER_PASS: ${{ secrets.DEV_MAILER_PASS }}
           MAIL_FROM: ${{ secrets.DEV_MAIL_FROM }}
