@@ -22,13 +22,13 @@ jobs:
       - name: Build application
         run: npm ci && npm run build
         env:
-          MAILER_HOST = 'smtp.zoho.eu'
-          MAILER_PORT = '465'
-          MAILER_USER = ${{ secrets.MAILER_USER }}
-          MAILER_PASS = ${{ secrets.MAILER_PASS }}
-          MAIL_FROM = ${{ secrets.MAIL_FROM }}
-          MAIL_TO = ${{ secrets.MAIL_TO }}
-          NODE_ENV = 'production'
+          MAILER_HOST: 'smtp.zoho.eu'
+          MAILER_PORT: '465'
+          MAILER_USER: ${{ secrets.MAILER_USER }}
+          MAILER_PASS: ${{ secrets.MAILER_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          NODE_ENV: 'production'
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
