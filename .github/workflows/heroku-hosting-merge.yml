@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to Heroku Hosting on main merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+      - uses: actions/checkout@v3
+
+      - name: Use Node 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Build application
+        run: npm ci && npm run build
+        env:
+          MAILER_HOST = 'smtp.zoho.eu'
+          MAILER_PORT = '465'
+          MAILER_USER = ${{ secrets.MAILER_USER }}
+          MAILER_PASS = ${{ secrets.MAILER_PASS }}
+          MAIL_FROM = ${{ secrets.MAIL_FROM }}
+          MAIL_TO = ${{ secrets.MAIL_TO }}
+          NODE_ENV = 'production'
+
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "nasaapodapi"
+          heroku_email: "shsavage1993@gmail.com"
+          branch: main

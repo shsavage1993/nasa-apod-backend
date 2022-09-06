@@ -4,11 +4,14 @@ import { Attachment } from 'nodemailer/lib/mailer';
 import multer from 'multer';
 import Logger from "./lib/logger";
 import path from 'path';
+import { inDevOrProd, inDevTest } from './lib/checkNodeEnv';
 
 export const createTransporter = async () => {
     let transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
 
-    if (process.env.NODE_ENV === 'test') {
+    console.log(inDevTest())
+
+    if (!inDevOrProd() && !inDevTest()) {
         // Generate test SMTP service account from ethereal.email
         const testAccount = await nodemailer.createTestAccount();
 
@@ -21,11 +24,14 @@ export const createTransporter = async () => {
                 user: testAccount.user, // generated ethereal user
                 pass: testAccount.pass, // generated ethereal password
             },
+            logger: true
         });
     } else {
+        const port = process.env.MAILER_PORT ? parseInt(process.env.MAILER_PORT) : undefined;
         transporter = nodemailer.createTransport({
             host: process.env.MAILER_HOST,
-            port: process.env.MAILER_PORT ? parseInt(process.env.MAILER_PORT) : undefined,
+            port: port,
+            secure: port === 465 ? true : false,
             auth: {
                 user: process.env.MAILER_USER,
                 pass: process.env.MAILER_PASS,
@@ -76,7 +82,7 @@ export const sendMail = (
         }
 
         Logger.info(`Message sent: ${info.messageId} - ${info.response}`);
-        if (process.env.NODE_ENV === 'test') {
+        if (!inDevOrProd() && !inDevTest()) {
             // Preview only available when sending through an Ethereal account
             Logger.info(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
         }

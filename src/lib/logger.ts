@@ -13,9 +13,8 @@ const levels = {
 // Show all the log levels in development mode
 // Show only warn and error messages in production
 const level = () => {
-    const env = process.env.NODE_ENV || 'development'
-    const isDevelopment = env === 'development'
-    return isDevelopment ? 'debug' : 'warn'
+    const isProduction = process.env.NODE_ENV === 'production'
+    return isProduction ? 'warn' : 'debug'
 }
 
 // Define different colors for each level.

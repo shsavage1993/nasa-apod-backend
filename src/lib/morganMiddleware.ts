@@ -15,8 +15,8 @@ const stream: StreamOptions = {
 // is already configured to only print warning
 // and error messages in production.
 const skip = () => {
-  const env = process.env.NODE_ENV || "development";
-  return env !== "development";
+  const isProduction = process.env.NODE_ENV === 'production'
+  return isProduction;
 };
 
 // Build the morgan middleware
