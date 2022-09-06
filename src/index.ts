@@ -29,6 +29,10 @@ app.get('/', cors(corsOptions), (req: Request, res: Response) => {
     res.send('NASA APOD API Server');
 });
 
+app.get('/api', cors(corsOptions), (req: Request, res: Response) => {
+    res.send('NASA APOD API Server');
+});
+
 // Create nodemailer transporter and verify connection
 let transporter: Transporter<SMTPTransport.SentMessageInfo>
 createTransporter().then((result) => {
